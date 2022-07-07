@@ -7,7 +7,7 @@ on:
     branches: [ "master" ]
 
 jobs:
-  build:
+  run-test:
 
     runs-on: ubuntu-latest
 
@@ -21,4 +21,10 @@ jobs:
       run: pip install -r requirements.txt
     - name: Test with robot
       run: |
-        robot ./tests
+        robot -d ./reports tests/tests.robot
+    - name: Reporting
+      if: always()
+      uses: actions/upload-artifact@v2
+      with:
+        name: Reports
+        path: reports
